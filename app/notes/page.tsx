@@ -1,6 +1,7 @@
 import { db } from "@/db/client";
 import { notes } from "@/db/schema";
 import { revalidatePath } from "next/cache";
+import NoteCard from "./NoteCard";
 
 export default async function NotesPage() {
   // Server action — this function runs on the SERVER when the form is submitted.
@@ -69,10 +70,7 @@ export default async function NotesPage() {
       ) : (
         <ul className="space-y-4">
           {allNotes.map((note) => (
-            <li key={note.id} className="border rounded p-4">
-              <h2 className="text-lg font-semibold">{note.title}</h2>
-              <p className="text-gray-700 mt-1">{note.body}</p>
-            </li>
+            <NoteCard key={note.id} note={note} />
           ))}
         </ul>
       )}
