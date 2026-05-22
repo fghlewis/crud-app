@@ -4,7 +4,7 @@
 // We need this because it tracks state (edit mode on/off) that changes on click.
 
 import { useState } from "react";
-import { updateNote } from "./actions";
+import { updateNote, deleteNote } from "./actions";
 
 // This is a TypeScript type — a description of the shape of a note object.
 // It tells TypeScript exactly what fields a note has and what types they are.
@@ -64,15 +64,23 @@ export default function NoteCard({ note }: { note: Note }) {
     );
   }
 
-  // If not in edit mode, show the note with a clickable title
+  // If not in edit mode, show the note with a clickable title and delete button
   return (
     <li className="border rounded p-4">
-      <button
-        onClick={() => setIsEditing(true)}
-        className="text-lg font-semibold hover:underline text-left w-full"
-      >
-        {title}
-      </button>
+      <div className="flex items-start justify-between gap-2">
+        <button
+          onClick={() => setIsEditing(true)}
+          className="text-lg font-semibold hover:underline text-left"
+        >
+          {title}
+        </button>
+        <button
+          onClick={() => deleteNote(note.id)}
+          className="text-sm text-red-500 hover:text-red-700 shrink-0"
+        >
+          Delete
+        </button>
+      </div>
       <p className="text-gray-700 mt-1">{body}</p>
     </li>
   );

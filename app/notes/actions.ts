@@ -13,3 +13,9 @@ export async function updateNote(id: string, title: string, body: string) {
   await db.update(notes).set({ title, body }).where(eq(notes.id, id));
   revalidatePath("/notes");
 }
+
+export async function deleteNote(id: string) {
+  // Delete the row where the id matches
+  await db.delete(notes).where(eq(notes.id, id));
+  revalidatePath("/notes");
+}
