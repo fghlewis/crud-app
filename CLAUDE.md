@@ -46,7 +46,24 @@ No login, no complex styling, no extra libraries beyond the core stack.
 - [x] 13. Add delete (delete button per note)
 - [x] 14. Recap (study guide of every concept covered + 2-3 exercises to try solo)
 
-## Key file locations (fill in as we build)
+## Next steps (solo exercises)
+
+- [ ] **1. Sort notes newest first** — In `page.tsx`, change the query:
+  ```typescript
+  import { desc } from "drizzle-orm";
+  const allNotes = await db.select().from(notes).orderBy(desc(notes.createdAt));
+  ```
+  New concept: `.orderBy()` and `desc()` in Drizzle. No schema or migration changes needed.
+
+- [ ] **2. Show a note count above the list** — Add `<p>{allNotes.length} notes</p>` between the form and the list. Think about where `allNotes.length` is available and why.
+
+- [ ] **3. Add a "pinned" checkbox to each note** — Touches every layer:
+  - Add a `pinned` boolean column to `db/schema.ts`
+  - Run `npm run db:generate` and `npm run db:migrate` to update the database
+  - Add a checkbox to `NoteCard.tsx` that calls a new `togglePin` server action in `actions.ts`
+  - Sort pinned notes to the top of the list
+
+## Key file locations
 
 - `db/schema.ts` — Drizzle table definitions
 - `db/client.ts` — database connection
